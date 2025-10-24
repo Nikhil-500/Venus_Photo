@@ -71,6 +71,9 @@
 import { motion } from "framer-motion";
 import BookForm from "../components/BookForm";
 import { useNavigate, useLocation } from "react-router-dom";
+import aes2Img from "../assets/aes2.jpg";
+import phImg from "../assets/ph.jpg";
+
 
 export default function BookNow() {
   const navigate = useNavigate();
@@ -90,7 +93,7 @@ export default function BookNow() {
         className="absolute inset-0 bg-cover bg-center"
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1529634899537-87df87f8d92d?auto=format&fit=crop&w=1600&q=80')",
+            `url(${aes2Img})`,
         }}
       />
       <div className="absolute inset-0 bg-black/70" />
@@ -135,7 +138,7 @@ export default function BookNow() {
             className="overflow-hidden rounded-2xl shadow-2xl border border-gray-700 bg-white/5"
           >
             <img
-              src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=900&q=80"
+              src={phImg}
               alt="Couple Session"
               className="w-full h-[400px] object-cover hover:scale-105 transition-transform duration-700"
             />

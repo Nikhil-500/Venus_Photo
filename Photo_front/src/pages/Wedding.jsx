@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import Pagex from "../components/Pagex";
 import AnimatedSection from "../components/AnimatedSection";
 import { useNavigate } from "react-router-dom";
+import weddingImg from "../assets/wedding.jpg";
 
 export default function Wedding() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export default function Wedding() {
       <AnimatedSection>
         <div className="grid md:grid-cols-2 gap-10 items-center">
           <motion.img
-            src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=80"
+            src={weddingImg}
             alt="Wedding Photography"
             className="rounded-2xl shadow-2xl object-cover w-full h-[400px]"
             whileHover={{ scale: 1.02 }}

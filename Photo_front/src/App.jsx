@@ -4,9 +4,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
-
-// ✅ Add this import
 import WhatsAppChat from "./components/WhatsAppChat";
+import ChatBox from "./components/ChatBox";
 
 // ✅ Main Pages
 import Home from "./pages/Home";
@@ -31,7 +30,6 @@ import FAQ from "./pages/FAQ";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import PaymentCancellation from "./pages/PaymentCancellation";
 import Pricing from "./pages/Pricing";
-import ChatBox from "./components/ChatBox";
 
 export default function App() {
   const location = useLocation();
@@ -96,7 +94,6 @@ export default function App() {
       </main>
 
       <Footer />
-      {/* ✅ Floating WhatsApp Chat Button */}
       <WhatsAppChat />
       <ChatBox />
     </>

@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import Pagex from "../components/Pagex";
 import AnimatedSection from "../components/AnimatedSection";
 import { useNavigate } from "react-router-dom";
+import architectureImg from "../assets/architecture.jpg";
+
 
 export default function Architecture() {
   const navigate = useNavigate();
@@ -35,7 +37,7 @@ export default function Architecture() {
           </div>
 
           <motion.img
-            src="https://images.unsplash.com/photo-1505842465776-3d90f616310d?auto=format&fit=crop&w=1200&q=80"
+            src={architectureImg}
             alt="Architecture Photography"
             className="rounded-2xl shadow-2xl object-cover w-full h-[400px]"
             whileHover={{ scale: 1.02 }}

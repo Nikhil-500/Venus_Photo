@@ -1,40 +1,28 @@
 import Pagex from "../components/Pagex";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import pr from "../assets/pr.jpg"; // ✅ Local image import
 
 const packages = [
   {
     title: "Starter Shoot",
     price: "₹8,999",
-    features: [
-      "2 Hours Session",
-      "10 Edited Photos",
-      "Online Gallery",
-    ],
+    features: ["2 Hours Session", "10 Edited Photos", "Online Gallery"],
     image:
       "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=80",
   },
   {
     title: "Standard Shoot",
     price: "₹15,999",
-    features: [
-      "5 Hours Session",
-      "25 Edited Photos",
-      "Print-Ready Files",
-    ],
+    features: ["5 Hours Session", "25 Edited Photos", "Print-Ready Files"],
     image:
       "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
   },
   {
     title: "Premium Shoot",
     price: "₹29,999",
-    features: [
-      "Full Day Coverage",
-      "Unlimited Photos",
-      "Photo Album Included",
-    ],
-    image:
-      "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=80",
+    features: ["Full Day Coverage", "Unlimited Photos", "Photo Album Included"],
+    image: pr, // ✅ Local image used here
   },
 ];
 
@@ -69,7 +57,7 @@ export default function Packages() {
               />
             </div>
 
-            {/* Content */}
+            {/* Content Section */}
             <div className="p-6 text-center">
               <h3 className="text-2xl font-semibold mb-2 text-white">
                 {pkg.title}
@@ -79,7 +67,10 @@ export default function Packages() {
               </p>
               <ul className="text-textMut space-y-1 mb-6">
                 {pkg.features.map((f) => (
-                  <li key={f} className="flex items-center justify-center gap-2">
+                  <li
+                    key={f}
+                    className="flex items-center justify-center gap-2"
+                  >
                     <span className="text-accent">✔</span> {f}
                   </li>
                 ))}

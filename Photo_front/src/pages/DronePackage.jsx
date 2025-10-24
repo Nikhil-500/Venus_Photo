@@ -1,6 +1,8 @@
 import Pagex from "../components/Pagex";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import vidVideo from "../assets/vid.mp4";
+import ddImg from "../assets/dd.jpg";
 
 const dronePackages = [
   {
@@ -44,15 +46,20 @@ export default function DronePackage() {
 
   return (
     <div className="relative bg-black text-white overflow-hidden">
-      {/* Hero Section */}
-      <div
-        className="relative h-[60vh] bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?auto=format&fit=crop&w=1600&q=80')",
-        }}
-      >
-        <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center text-center px-6">
+      {/* ✅ Hero Section with Video Background */}
+      <div className="relative h-[60vh] overflow-hidden">
+        {/* 🎥 Background Video */}
+        <video
+          src={vidVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute top-0 left-0 w-full h-full object-cover"
+        />
+
+        {/* 🖤 Overlay for text readability */}
+        <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-center px-6">
           <motion.h1
             className="text-5xl font-bold text-accent mb-3"
             initial={{ opacity: 0, y: 20 }}
@@ -65,13 +72,12 @@ export default function DronePackage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            Experience breathtaking aerial visuals with our professional drone
-            services.
+            Experience breathtaking aerial visuals with our professional drone services.
           </motion.p>
         </div>
       </div>
 
-      {/* Package Cards */}
+      {/* ✅ Package Cards */}
       <Pagex>
         <div className="grid md:grid-cols-3 gap-8 mt-12">
           {dronePackages.map((pkg) => (
@@ -81,7 +87,7 @@ export default function DronePackage() {
               whileHover={{ scale: 1.05 }}
             >
               <img
-                src="https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=800&q=80"
+                src={ddImg}
                 alt="Drone package"
                 className="rounded-lg mb-4 w-full h-48 object-cover"
               />

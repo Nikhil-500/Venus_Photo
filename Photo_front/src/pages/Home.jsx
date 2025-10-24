@@ -1,39 +1,56 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Pagex from "../components/Pagex";
 import { useEffect, useState } from "react";
-import BookForm from "../components/BookForm"; // ✅ import reusable booking form
+import BookForm from "../components/BookForm";
+
+// ✅ Local images
+import a2 from "../assets/a2.jpg";
+import k1 from "../assets/k1.jpg";
+import k2 from "../assets/k2.jpg";
+import cr from "../assets/cr.jpg";
+import kkImg from "../assets/kk.jpg";
+import ar from "../assets/ar.jpg";
+
 
 export default function Home() {
   const [index, setIndex] = useState(0);
   const [showCoupleMore, setShowCoupleMore] = useState(false);
   const [showArchitectureMore, setShowArchitectureMore] = useState(false);
 
-  const slides = [
-    "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1521334884684-d80222895322?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1504208434309-cb69f4fe52b0?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=80",
-  ];
+  // ✅ Local image slides for hero section
+  const slides = [a2, k1, k2, cr];
 
   useEffect(() => {
-    const timer = setInterval(() => setIndex((i) => (i + 1) % slides.length), 4000);
+    const timer = setInterval(() => setIndex((i) => (i + 1) % slides.length), 5000);
     return () => clearInterval(timer);
   }, [slides.length]);
 
   return (
     <>
-      {/* --- Hero Section --- */}
-      <section className="relative w-full h-screen overflow-hidden">
-        <motion.img
-          key={index}
-          src={slides[index]}
-          alt="Hero"
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        />
-        <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-center px-6">
+      {/* --- Hero Section (Ken Burns Animation) --- */}
+      <section className="relative w-full h-[90vh] md:h-screen overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={index}
+            className="absolute inset-0 w-full h-full"
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.05 }}
+            transition={{ duration: 1 }}
+          >
+            <motion.img
+              src={slides[index]}
+              alt={`Slide ${index}`}
+              className="w-full h-full object-cover object-center"
+              initial={{ scale: 1 }}
+              animate={{ scale: 1.1 }}
+              transition={{ duration: 5, ease: "easeInOut" }}
+            />
+            <div className="absolute inset-0 bg-black/60"></div>
+          </motion.div>
+        </AnimatePresence>
+
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
           <motion.h1
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -53,31 +70,37 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- Featured Works --- */}
-      <Pagex title="Featured Works" subtitle="A glimpse of our most loved moments">
-        <div className="grid md:grid-cols-3 gap-6">
-          {[
-            "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1504208434309-cb69f4fe52b0?auto=format&fit=crop&w=1200&q=80",
-          ].map((img, i) => (
-            <motion.div
-              key={i}
-              className="rounded-xl overflow-hidden shadow-lg hover:scale-105 transition-transform duration-500 group"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              <img
+      {/* --- Featured Works (Moving Gallery) --- */}
+      <section className="py-20 bg-black/80 overflow-hidden">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center text-3xl font-semibold text-accent mb-10"
+        >
+          Featured Works
+        </motion.h2>
+
+        <div className="overflow-hidden relative max-w-7xl mx-auto">
+          <motion.div
+            className="flex gap-6"
+            animate={{ x: [0, -1500] }}
+            transition={{
+              x: { repeat: Infinity, repeatType: "mirror", duration: 25, ease: "linear" },
+            }}
+          >
+            {[a2, k1, k2, cr, kkImg].map((img, i) => (
+              <motion.img
+                key={i}
                 src={img}
-                alt={`Portfolio ${i + 1}`}
-                className="w-full h-72 object-cover group-hover:brightness-110"
-                onError={(e) => (e.target.src = "https://via.placeholder.com/400x300?text=Image+Unavailable")}
+                alt={`Slide ${i}`}
+                whileHover={{ scale: 1.05 }}
+                className="w-[320px] h-[220px] object-cover rounded-xl shadow-lg transition-all duration-500"
               />
-            </motion.div>
-          ))}
+            ))}
+          </motion.div>
         </div>
-      </Pagex>
+      </section>
 
       {/* --- Couple Photography Blog --- */}
       <section className="py-20 bg-gradient-to-b from-black via-gray-900 to-black text-center">
@@ -92,7 +115,7 @@ export default function Home() {
 
         <div className="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto px-6">
           <motion.img
-            src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=80"
+            src={kkImg}
             alt="Couple Blog"
             className="rounded-2xl shadow-2xl object-cover w-full h-[400px]"
             whileHover={{ scale: 1.03 }}
@@ -120,7 +143,7 @@ export default function Home() {
                 >
                   <p className="text-textMut mb-4">
                     We focus on real emotions — the spark between two souls. Each photo session blends
-                    creativity and storytelling, ensuring that your love story feels authentic and unforgettable.
+                    creativity and storytelling, ensuring your love story feels authentic and unforgettable.
                   </p>
                   <p className="text-textMut mb-4">
                     Whether it’s a sunset beach shoot or a cozy indoor setup, our goal is to create magic with light,
@@ -193,7 +216,7 @@ export default function Home() {
           </motion.div>
 
           <motion.img
-            src="https://images.unsplash.com/photo-1536104968055-4d61aa56f46a?auto=format&fit=crop&w=1200&q=80"
+            src={ar}
             alt="Architecture Blog"
             className="rounded-2xl shadow-2xl object-cover w-full h-[400px] order-1 md:order-2"
             whileHover={{ scale: 1.03 }}
@@ -201,45 +224,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- Sliding Panel --- */}
-      <section className="py-16 bg-black/80 overflow-hidden">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center text-3xl font-semibold text-accent mb-10"
-        >
-          Love In Every Frame
-        </motion.h2>
-
-        <div className="overflow-hidden relative max-w-7xl mx-auto">
-          <motion.div
-            className="flex gap-6"
-            animate={{ x: [0, -1500] }}
-            transition={{
-              x: { repeat: Infinity, repeatType: "mirror", duration: 25, ease: "linear" },
-            }}
-          >
-            {[
-              "https://images.unsplash.com/photo-1534683251854-94f7e39b3033?auto=format&fit=crop&w=1200&q=80",
-              "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=80",
-              "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1200&q=80",
-              "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=80",
-              "https://images.unsplash.com/photo-1504208434309-cb69f4fe52b0?auto=format&fit=crop&w=1200&q=80",
-            ].map((url, i) => (
-              <motion.img
-                key={i}
-                src={url}
-                alt={`Slide ${i}`}
-                whileHover={{ scale: 1.05 }}
-                className="w-[320px] h-[220px] object-cover rounded-xl shadow-lg transition-all duration-500"
-              />
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* --- Book Your Date Section (Aligned & Centered) --- */}
+      {/* --- Book Your Date Section --- */}
       <section className="relative bg-black py-24 text-white flex flex-col items-center justify-center px-6">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}

@@ -1,6 +1,8 @@
 import Pagex from "../components/Pagex";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import vid1Video from "../assets/vid1.mp4";
+import imgImg from "../assets/img.jpg";
 
 const cinematographyPackages = [
   {
@@ -43,15 +45,18 @@ export default function CinematographyPackage() {
   };
 
   return (
-    <div className="relative bg-black text-white overflow-hidden">
-      {/* Hero Section */}
-      <div
-        className="relative h-[60vh] bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=80')",
-        }}
-      >
+      <div className="relative bg-black text-white overflow-hidden">
+        {/* ✅ Hero Section with Video Background */}
+        <div className="relative h-[60vh] overflow-hidden">
+          {/* 🎥 Background Video */}
+          <video
+            src={vid1Video}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute top-0 left-0 w-full h-full object-cover"
+          />
         <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center text-center px-6">
           <motion.h1
             className="text-5xl font-bold text-accent mb-3"
@@ -81,7 +86,7 @@ export default function CinematographyPackage() {
               whileHover={{ scale: 1.05 }}
             >
               <img
-                src="https://images.unsplash.com/photo-1497032205916-ac775f0649ae?auto=format&fit=crop&w=800&q=80"
+                src={imgImg}
                 alt="Cinematography package"
                 className="rounded-lg mb-4 w-full h-48 object-cover"
               />

@@ -56,7 +56,7 @@ export default function About() {
               >
                 <a
                   href="/contact"
-                  className="inline-block mt-4 px-6 py-3 bg-accent text-black rounded-full font-semibold hover:bg-white hover:text-black transition duration-300"
+                  className="inline-block mt-4 px-6 py-3 bg-accent text-white rounded-full font-semibold hover:bg-purple-600 hover:text-black transition duration-300"
                 >
                   Let’s Create Magic Together
                 </a>

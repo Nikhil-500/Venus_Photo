@@ -1,6 +1,9 @@
 import Pagex from "../components/Pagex";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import wed4Img from "../assets/wed4.jpg";
+import wedsImg from "../assets/weds.jpg";
+
 
 const weddingPackages = [
   {
@@ -49,7 +52,7 @@ export default function WeddingPackage() {
         className="relative h-[60vh] bg-cover bg-center"
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1502786129293-79981df4e689?auto=format&fit=crop&w=1600&q=80')",
+            `url(${wed4Img})`,
         }}
       >
         <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center text-center px-6">
@@ -80,7 +83,7 @@ export default function WeddingPackage() {
               whileHover={{ scale: 1.05 }}
             >
               <img
-                src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80"
+                src={wedsImg}
                 alt="Wedding package"
                 className="rounded-lg mb-4 w-full h-48 object-cover"
               />
