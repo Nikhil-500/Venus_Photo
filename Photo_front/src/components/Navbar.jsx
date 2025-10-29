@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import logo from "../assets/logo.jpg";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -9,7 +10,7 @@ export default function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const location = useLocation();
 
-  // ✅ Define Navbar Items
+  // ✅ Navbar Items
   const navItems = [
     { name: "Home", to: "/" },
     { name: "About", to: "/about" },
@@ -30,18 +31,18 @@ export default function Navbar() {
         { name: "Cinematography Package", to: "/packages/cinematography" },
       ],
     },
-    { name: "Book Now", to: "/booknow" },
     { name: "Contact", to: "/contact" },
+    { name: "Book Now", to: "/booknow" },
   ];
 
-  // ✅ Add scroll detection for navbar background
+  // ✅ Scroll detection
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // ✅ Auto-close mobile menu when route changes
+  // ✅ Close mobile menu on route change
   useEffect(() => {
     setOpen(false);
     setActiveDropdown(null);
@@ -59,12 +60,19 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-        {/* --- Logo --- */}
+        {/* --- Logo + Title --- */}
         <Link
           to="/"
-          className="text-2xl md:text-3xl font-heading text-accent tracking-wider relative group"
+          className="flex items-center gap-3 text-2xl md:text-3xl font-heading text-accent tracking-wider group relative"
         >
-          Muruliraj<span className="text-white"> Photography</span>
+          <motion.img
+            src={logo}
+            alt="Muruliraj Photography Logo"
+            className="w-10 h-10 rounded-full object-cover border border-accent/30 group-hover:scale-105 transition-transform duration-300"
+          />
+          <span>
+            Muruliraj<span className="text-white"> Photography</span>
+          </span>
           <motion.span
             layoutId="underline"
             className="absolute -bottom-1 left-0 w-0 h-[2px] bg-accent transition-all duration-300 group-hover:w-full"
@@ -80,7 +88,6 @@ export default function Navbar() {
               onMouseEnter={() => setActiveDropdown(item.name)}
               onMouseLeave={() => setActiveDropdown(null)}
             >
-              {/* Parent link */}
               <Link
                 to={item.to || "#"}
                 className={`flex items-center gap-1 transition duration-300 ${
@@ -101,7 +108,7 @@ export default function Navbar() {
                 )}
               </Link>
 
-              {/* --- Dropdown Menu --- */}
+              {/* --- Dropdown --- */}
               {item.dropdown && (
                 <AnimatePresence>
                   {activeDropdown === item.name && (

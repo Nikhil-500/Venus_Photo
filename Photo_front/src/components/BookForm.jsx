@@ -6,6 +6,7 @@ export default function BookForm({ selectedPackage = "" }) {
     name: "",
     email: "",
     phone: "",
+    venue: "",
     service: "",
     package: "",
     message: "",
@@ -30,12 +31,20 @@ export default function BookForm({ selectedPackage = "" }) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // ✅ WhatsApp message link generator
+  const generateWhatsAppMessage = () => {
+    const whatsappNumber = "+919035311565"; // 🔹 Muruli Raj's number
+    const message = `📸 *New Booking Request!*\n\n👤 Name: ${formData.name}\n📧 Email: ${formData.email}\n📞 Phone: ${formData.phone}\n🏛️ Venue: ${formData.venue}\n🧾 Service: ${formData.service}\n💎 Package: ${formData.package}\n💬 Message: ${formData.message || "N/A"}`;
+    return `https://api.whatsapp.com/send?phone=${whatsappNumber.replace("+", "")}&text=${encodeURIComponent(message)}`;
+  };
+
   // ✅ Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus({ loading: true, success: null, error: null });
 
     try {
+      // Send booking details to your backend (for email)
       const res = await fetch(
         `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/contact`,
         {
@@ -48,10 +57,14 @@ export default function BookForm({ selectedPackage = "" }) {
       const data = await res.json();
 
       if (res.ok && data.success) {
+        // ✅ Open WhatsApp message link automatically
+        window.open(generateWhatsAppMessage(), "_blank");
+
         setFormData({
           name: "",
           email: "",
           phone: "",
+          venue: "",
           service: "",
           package: "",
           message: "",
@@ -59,7 +72,7 @@ export default function BookForm({ selectedPackage = "" }) {
         setStatus({
           loading: false,
           success:
-            "✅ Your booking details have been sent successfully! We'll contact you shortly.",
+            "✅ Your booking has been sent successfully! We'll contact you shortly via email or WhatsApp.",
           error: null,
         });
       } else {
@@ -123,7 +136,6 @@ export default function BookForm({ selectedPackage = "" }) {
           required
         />
 
-        {/* ✅ Service Dropdown */}
         <select
           name="service"
           value={formData.service}
@@ -134,7 +146,20 @@ export default function BookForm({ selectedPackage = "" }) {
           <option value="">-- Select Service --</option>
           <option>Wedding</option>
           <option>Architecture</option>
+          <option>Cinematography</option>
+          <option>Drone Shoot</option>
         </select>
+
+        {/* ✅ Venue Field */}
+        <input
+          type="text"
+          name="venue"
+          value={formData.venue}
+          onChange={handleChange}
+          placeholder="Venue (e.g., Kushalnagar Convention Hall)"
+          className="p-3 rounded-md bg-zinc-800 text-white w-full focus:ring-2 focus:ring-orange-500 outline-none md:col-span-2"
+          required
+        />
 
         {/* ✅ Package Field */}
         <input
@@ -142,7 +167,7 @@ export default function BookForm({ selectedPackage = "" }) {
           name="package"
           value={formData.package}
           onChange={handleChange}
-          placeholder="Package (e.g., Drone Package, Premium Shoot)"
+          placeholder="Package (e.g., Gold Wedding)"
           disabled={!!selectedPackage}
           className={`p-3 rounded-md bg-zinc-800 text-white w-full focus:ring-2 focus:ring-orange-500 outline-none md:col-span-2 ${
             selectedPackage ? "opacity-70 cursor-not-allowed" : ""
@@ -172,7 +197,7 @@ export default function BookForm({ selectedPackage = "" }) {
         {status.loading ? "Sending..." : "Submit Request"}
       </button>
 
-      {/* --- Success / Error Messages --- */}
+      {/* --- Status Messages --- */}
       {status.success && (
         <p className="text-green-400 text-center font-medium mt-2">
           {status.success}

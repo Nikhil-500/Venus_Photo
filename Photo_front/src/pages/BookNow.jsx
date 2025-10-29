@@ -73,6 +73,7 @@ import BookForm from "../components/BookForm";
 import { useNavigate, useLocation } from "react-router-dom";
 import aes2Img from "../assets/aes2.jpg";
 import phImg from "../assets/ph.jpg";
+import ClientsSection from "../components/ClientsSection";
 
 
 export default function BookNow() {
@@ -193,6 +194,9 @@ export default function BookNow() {
           </motion.div>
         </div>
       </div>
+      {/* --- Clients Section --- */}
+            <ClientsSection />
     </section>
+    
   );
 }

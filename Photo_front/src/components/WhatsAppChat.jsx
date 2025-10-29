@@ -6,7 +6,7 @@ export default function WhatsAppChat() {
   const [open, setOpen] = useState(false);
   const [showGreeting, setShowGreeting] = useState(false);
 
-  const whatsappNumber = "+919876543210"; // 🔹 Dummy number — replace with yours
+  const whatsappNumber = "+917904972933"; // 🔹 Replace with your number
   const baseLink = `https://api.whatsapp.com/send?phone=${whatsappNumber.replace("+", "")}`;
 
   const quickMessages = [
@@ -30,15 +30,24 @@ export default function WhatsAppChat() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Hide greeting when chat opens
   const handleOpen = () => {
     setShowGreeting(false);
     setOpen(!open);
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
-      {/* --- Auto Greeting Bubble --- */}
+    <div className="fixed bottom-6 right-6 z-50 flex flex-row-reverse items-center gap-3">
+      {/* --- Floating WhatsApp Button --- */}
+      <motion.button
+        onClick={handleOpen}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-xl flex items-center justify-center"
+      >
+        <FaWhatsapp className="text-3xl" />
+      </motion.button>
+
+      {/* --- Side Greeting Bubble --- */}
       <AnimatePresence>
         {showGreeting && !open && (
           <motion.div
@@ -46,7 +55,7 @@ export default function WhatsAppChat() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.4 }}
-            className="bg-white text-gray-800 text-sm shadow-lg rounded-lg px-4 py-2 mb-3 max-w-[220px]"
+            className="bg-white text-gray-800 text-sm shadow-lg rounded-lg px-4 py-2 max-w-[220px]"
           >
             👋 Hi there! How can we help you today?
           </motion.div>
@@ -61,7 +70,7 @@ export default function WhatsAppChat() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             transition={{ duration: 0.3 }}
-            className="bg-white text-gray-900 w-72 rounded-2xl shadow-2xl p-4 mb-3"
+            className="absolute bottom-20 right-0 bg-white text-gray-900 w-72 rounded-2xl shadow-2xl p-4"
           >
             {/* Header */}
             <div className="flex items-center justify-between border-b pb-2 mb-3">
@@ -105,16 +114,6 @@ export default function WhatsAppChat() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* --- Floating WhatsApp Button --- */}
-      <motion.button
-        onClick={handleOpen}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-xl flex items-center justify-center"
-      >
-        <FaWhatsapp className="text-3xl" />
-      </motion.button>
     </div>
   );
 }
